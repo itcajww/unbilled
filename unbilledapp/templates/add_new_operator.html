@@ -1,0 +1,170 @@
+{% extends "header_after_login.html" %}
+
+{% block container %}
+{% load static %}
+
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>            
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <div class="container-fluid w-90 p-4 bg-light mt-5 ">
+        
+        <!-- <div class="p-sm-4"></div> -->
+
+       <div class="row">
+           <div class="col-md-7">
+            <h3>Add New Operator</h3>
+
+            <form id="form_add_new_operator" action="" method="post" class="form-group">
+                {% csrf_token %}
+    
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="" class="mt-4">Operator Name</label>
+                        <input type="text" name="opname" id="opname" placeholder="Enter operator name  ..." class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="" class="mt-4">Operator Login Name</label>
+                        <input type="text" name="loginname" id="loginname" placeholder="Enter operator login name  ..." class="form-control">
+                    </div>
+                </div>
+    
+                
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="" class="mt-4">Code</label>
+                        <input type="text" name="Code" id="Code" placeholder="Enter Code ..." class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="" class="mt-4">Country</label>
+                        <input type="text" name="Country" id="Country" placeholder="Enter Country  ..." class="form-control">
+                    </div>
+                </div>
+    
+                
+    
+                
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="" class="mt-4">Email ID</label>
+                        <input type="email" name="email" id="email" placeholder="Enter operator Email ..." class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="" class="mt-4">PBI Email</label>
+                        <input type="email" name="pbiemail" id="pbiemail" placeholder="Enter PBI Email  ..." class="form-control">
+                    </div>
+                </div>
+    
+                
+                <div class="row">
+                    <div class="col-sm">
+                        <input type="submit" name="submit" id="submit" value="Add Operator" class="mt-4 btn btn-success">
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                </div>
+            </form>
+    
+            
+            <script type='text/javascript'>
+                $('#form_add_new_operator').on('submit',function (e) {
+                   e.preventDefault();
+                   $.ajax({
+                       type: 'POST',
+                       url: '/add_new_operator_ajax/',
+                       data: $('#form_add_new_operator').serialize(),
+                       success: function () {
+                           swal({
+                               title: "Added!",
+                               text: "New Operator Added Successfully!",
+                               icon: "success",
+                               }).then(function () {
+                                    window.location.reload();
+                               });
+                           }
+                       });
+                   });
+    
+               </script>
+           </div>
+           
+       <div class="col">
+           <div class="row">
+               <div class="col">
+                   <div class="row">
+                        <div class="col-sm">
+                            <h3>Non Email User</h3>
+                        </div>
+                         <div class="col-sm">
+                             <form action="" id="GetList" method="POST" class="form-group">
+                                {% csrf_token %}
+                                 <input type="hidden" name="test" value="test" class="">
+                                 <input type="submit" class="btn btn-warning" value="Get Non Email User">
+                             </form>
+                            <!-- <button id="GetList" class="btn btn-warning">Get Non User List</button> -->
+                         </div>                       
+
+                   </div>
+                   
+               <div class="table-responsive mt-4">
+                <table id="table" class="table table-striper">
+                    <tr>
+                        <th>Name</th>
+                        <th>Sales Rep Name</th>
+                    </tr>
+                </table>
+           </div>
+               </div>
+               <!-- <a href="#" class="btn btn-warning"></a> -->
+           </div>
+        </div>
+
+
+       </div>
+    </div>
+
+<div class="p-md-5"></div>
+
+<script type='text/javascript'>
+    $body = $("body");
+    
+    $(document).on({
+        ajaxStart: function() { $body.addClass("loading");    },
+         ajaxStop: function() { $body.removeClass("loading"); }    
+    });
+    </script>
+
+<script type='text/javascript'>
+    $('#GetList').on('submit',function (e) {
+       e.preventDefault();
+       $.ajax({
+           type: 'POST',
+           url: '/get_non_email_op_list/',
+           data: $('#GetList').serialize(),
+           success: function (data) {
+               console.log(data);
+               const data1 = JSON.parse(data);
+
+               var student = '';
+                        $.each(data1, function (key, value) {
+                            student += '<tr>';
+                            student += '<td>' + 
+                                value.JobOperator + '</td>';
+                            student += '<td>' + 
+                                value.JobSalesRep + '</td>';
+                            student += '</tr>';
+                        });
+                          
+                        $('#table').append(student);
+               }
+           });
+       });
+
+   </script>
+
+<div class="modal"><!-- Place at bottom of page --></div>
+
+{% endblock container %}

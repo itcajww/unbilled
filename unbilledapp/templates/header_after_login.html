@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ {% load static %}
+
+    <title>AjWorld</title>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/icon" href="images/icon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link rel="icon" type="image/icon" href="image/icon.png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+</script>
+
+
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-md navbar-light sticty-top">
+        <a href="#" class="navbar-brand"><img src="{% static 'images/logo_black.png' %}" alt="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarRes"><span class="navbar-toggler-icon"></span></button>
+        
+        <div id="navbarRes" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+               <center><li class="nav-item"> <a href="/dashboard/"   class="nav-link btn border-0 btn-outline-dark  mr-3 pl-3 pr-3"> <i class="fa fa-home" aria-hidden="true"></i> &nbsp;&nbsp; Home</a> </li></center>
+               <center><li class="nav-item"> <a href="/add_new_operator/"   class="nav-link btn border-0 btn-outline-dark mr-3 pl-3 pr-3"><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp;Add New Operator</a> </li></center>
+               <center><li class="nav-item"> <a href="/logout/" class="nav-link btn border-0 btn-outline-dark mr-3 pl-3 pr-3">  <i class="fa fa-power-off" aria-hidden="true"></i> &nbsp;&nbsp; Logout</a> </li></center>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="container-fluid p-3 bg-dark-blue">
+        <div class="row">
+            <div class="col"> <h4 class="text-white ml-5">Unbilled & Billed Data Trigger...</h4> </div>
+            <div class="col p-1">
+                <!-- <form action="" id='mail_form' method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Mail" class='btn float-right mr-sm-5 btn-success'>
+                </form> 
+                 -->
+            </div>
+        </div>
+    </div>
+    {% block container %}
+      
+    {% endblock container %}
+
+    <br>
+    <div class="container-fluid p-2 bg-dark ">
+        <p class="text-white text-center">Copyright © All rights reserved by A.J Worldwide Services Inc.</p>
+    </div>
+</body>
+</html>

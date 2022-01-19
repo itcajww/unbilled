@@ -1,0 +1,119 @@
+{% extends "header_after_login.html" %}
+
+{% block container %}
+{% load static %}
+
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>            
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {% if msg_file == 'True' %}
+    <script type='text/javascript'>
+    swal({
+        title: "File Uploaded!",
+        text: "File Uploaded successfully completed!",
+        icon: "success",
+        });
+    </script>
+
+
+{% endif %}
+
+
+    <div class="container-fluid mt-5 w-90 ">
+        <div class="row">
+            <div class="col-sm p-5 m-1 ">
+                <h2 class="text-dark">Import Data</h2>
+                <form action="" method="post" class="form-group mt-5 w-75" enctype="multipart/form-data">
+                  {% csrf_token %}
+                    <div class="col-sm">
+                        <label for="">Upload File</label>
+                        <input type="file" name='upload_file' id='upload_file' class='form-control'>
+                        <input type="submit" value="Upload Data" class="btn btn-success mt-4">
+                    </div>
+                </form>
+            </div>
+            <div class="col p-5 m-1 ">
+                  <button class='btn  bg-white' onclick="myFunction()">
+                    <h5 class="text-dark"> Click here for Unbilled Mail Trigger <i class="fa fa-arrow-down" aria-hidden="true"></i></h5>
+                    <img src="{% static 'images/mail.gif' %}" class='img-thumbnail' alt="logo">
+                  </button>
+            </div>
+            <div class="col p-5 m-1 ">
+                  <button class='btn  bg-white' onclick="myFunction1()">
+                    <h5 class="text-dark"> Click here for Billed Mail Trigger <i class="fa fa-arrow-down" aria-hidden="true"></i></h5>
+                    <img src="{% static 'images/billed.gif' %}" class='img-thumbnail' alt="logo">
+                  </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm p-5">
+      
+    </div>
+    <script>
+      function myFunction() {
+        $.ajax({
+        type: 'GET',
+        url: '/mail_data/',
+        success: function () {
+            swal({
+                title: "Mailed!",
+                text: "Unbilled Mail sent successfully!",
+                icon: "success",
+                });
+                // $('#service_table').DataTable().ajax.reload();
+              }
+         });
+      }
+      </script>
+
+      
+    <script>
+        function myFunction1() {
+          $.ajax({
+          type: 'GET',
+          url: '/mail_billed_data/',
+          success: function () {
+              swal({
+                  title: "Mailed!",
+                  text: "Billed Mail sent successfully!",
+                  icon: "success",
+                  });
+                  // $('#service_table').DataTable().ajax.reload();
+                }
+           });
+        }
+        </script>
+
+<script type='text/javascript'>
+$body = $("body");
+
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
+</script>
+    
+<script>
+    $('#mail_form').on('submit',function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: 'GET',
+        url: '/mail_data/',
+        success: function () {
+            swal({
+                title: "Mailed!",
+                text: "Unbilled Mail sent successfully!",
+                icon: "success",
+                });
+                // $('#service_table').DataTable().ajax.reload();
+              }
+         });
+    });
+</script>
+
+<div class="modal"><!-- Place at bottom of page --></div>
+
+{% endblock container %}
